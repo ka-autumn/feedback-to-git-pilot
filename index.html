@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>フィードバック検証アプリ</title>
+<style>body{font:18px system-ui;max-width:40rem;margin:4rem auto;padding:1rem;line-height:1.8}button{font:inherit;padding:.6rem 1rem}output{font-size:2rem;display:block;margin:1rem 0}small{color:#555}</style>
+<h1>フィードバック検証アプリ</h1>
+<p>ゲーム本体とは別の、受付・AI修正・レビュー・反映通知を確認するためのサンプルです。</p>
+<p>内部の残数: <strong id="count">3</strong></p>
+<output id="label"></output>
+<button id="consume">1回使う</button> <button id="reset">リセット</button>
+<p><small>初期版には、残数0でも「残り1回」と表示される検証用の不具合があります。</small></p>
+<script type="module">
+import { formatRemainingAttempts } from './src/remaining-attempts.js';
+let count = 3;
+function render() {
+  document.querySelector('#count').textContent = String(count);
+  document.querySelector('#label').textContent = formatRemainingAttempts(count);
+  document.querySelector('#consume').disabled = count === 0;
+}
+document.querySelector('#consume').onclick = () => { count--; render(); };
+document.querySelector('#reset').onclick = () => { count = 3; render(); };
+render();
+</script>
+</html>
